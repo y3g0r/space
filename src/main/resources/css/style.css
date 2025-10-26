@@ -1,0 +1,208 @@
+/* Modern Disk Analyzer Stylesheet */
+
+/* Root styling */
+.root {
+    -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    -fx-font-size: 13px;
+    -fx-background-color: #f5f5f5;
+}
+
+/* Toolbar */
+.tool-bar {
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #f0f0f0);
+    -fx-border-color: #d0d0d0;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 8px;
+}
+
+/* Buttons */
+.button {
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #e8e8e8);
+    -fx-background-radius: 4px;
+    -fx-border-color: #c0c0c0;
+    -fx-border-radius: 4px;
+    -fx-padding: 6px 12px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #f0f8ff, #d0e8ff);
+    -fx-border-color: #4A90E2;
+}
+
+.button:pressed {
+    -fx-background-color: #d0e8ff;
+}
+
+.button:disabled {
+    -fx-opacity: 0.5;
+}
+
+/* TreeTableView */
+.tree-table-view {
+    -fx-background-color: white;
+    -fx-border-color: #d0d0d0;
+    -fx-border-width: 1;
+}
+
+.tree-table-view .column-header {
+    -fx-background-color: linear-gradient(to bottom, #f8f8f8, #e8e8e8);
+    -fx-font-weight: bold;
+    -fx-border-color: #d0d0d0;
+    -fx-padding: 5px;
+}
+
+.tree-table-view .column-header-background {
+    -fx-background-color: #f0f0f0;
+}
+
+.tree-table-row-cell {
+    -fx-padding: 4px;
+}
+
+.tree-table-row-cell:selected {
+    -fx-background-color: #4A90E2;
+    -fx-text-fill: white;
+}
+
+.tree-table-row-cell:hover {
+    -fx-background-color: #e8f4fd;
+}
+
+.tree-table-row-cell:selected:hover {
+    -fx-background-color: #3a7bc8;
+}
+
+.tree-table-cell {
+    -fx-padding: 4px 8px;
+}
+
+.tree-table-cell.directory-cell {
+    -fx-text-fill: #4A90E2;
+    -fx-font-weight: bold;
+}
+
+.tree-table-cell.file-cell {
+    -fx-text-fill: #333333;
+}
+
+.tree-table-row-cell:hover .tree-table-cell.directory-cell {
+    -fx-text-fill: #2b5a8a;
+}
+
+.tree-table-row-cell:hover .tree-table-cell.file-cell {
+    -fx-text-fill: #000000;
+}
+
+.tree-table-row-cell:selected .tree-table-cell.directory-cell,
+.tree-table-row-cell:selected .tree-table-cell.file-cell {
+    -fx-text-fill: white;
+}
+
+.tree-table-row-cell:selected:hover .tree-table-cell.directory-cell,
+.tree-table-row-cell:selected:hover .tree-table-cell.file-cell {
+    -fx-text-fill: white;
+}
+
+/* Progress Bar */
+.progress-bar {
+    -fx-background-radius: 2px;
+    -fx-border-radius: 2px;
+}
+
+.progress-bar .track {
+    -fx-background-color: #e0e0e0;
+    -fx-background-radius: 2px;
+}
+
+.progress-bar .bar {
+    -fx-background-color: linear-gradient(to right, #4A90E2, #50B5E9);
+    -fx-background-radius: 2px;
+    -fx-padding: 2px;
+}
+
+/* Labels */
+.label {
+    -fx-text-fill: #333333;
+}
+
+/* Split Pane */
+.split-pane {
+    -fx-background-color: #f5f5f5;
+}
+
+.split-pane-divider {
+    -fx-background-color: #d0d0d0;
+    -fx-padding: 0 1 0 1;
+}
+
+/* Context Menu */
+.context-menu {
+    -fx-background-color: white;
+    -fx-border-color: #c0c0c0;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 2, 2);
+}
+
+.menu-item {
+    -fx-padding: 6px 12px;
+}
+
+.menu-item:hover {
+    -fx-background-color: #4A90E2;
+    -fx-text-fill: white;
+}
+
+.menu-item .label {
+    -fx-text-fill: #333333;
+}
+
+.menu-item:hover .label {
+    -fx-text-fill: white;
+}
+
+/* Dialog */
+.dialog-pane {
+    -fx-background-color: white;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: linear-gradient(to bottom, #f8f8f8, #e8e8e8);
+}
+
+/* Text Input */
+.text-field {
+    -fx-background-color: white;
+    -fx-border-color: #c0c0c0;
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
+    -fx-padding: 6px;
+}
+
+.text-field:focused {
+    -fx-border-color: #4A90E2;
+    -fx-border-width: 2;
+}
+
+/* Scroll Bar */
+.scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #c0c0c0;
+    -fx-background-radius: 4px;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #a0a0a0;
+}
+
+.scroll-bar .track {
+    -fx-background-color: #f0f0f0;
+}
+
+/* Canvas (for pie chart) */
+.canvas {
+    -fx-cursor: hand;
+}
