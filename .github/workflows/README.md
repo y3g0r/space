@@ -26,7 +26,8 @@ The `release.yml` workflow automates building and releasing the Space applicatio
 
 - ✅ **Fat JAR** - Universal Java application
 - ✅ **Windows MSI** - Windows installer with bundled JRE
-- ✅ **macOS DMG** - macOS disk image with bundled JRE
+- ✅ **macOS DMG (Intel)** - macOS disk image for Intel Macs with bundled JRE
+- ✅ **macOS DMG (Apple Silicon)** - macOS disk image for M1/M2/M3 Macs with bundled JRE
 - ✅ **Linux DEB** - Debian/Ubuntu package
 - ✅ **Linux RPM** - Fedora/RHEL/CentOS package
 
@@ -41,7 +42,8 @@ This workflow runs when:
 | Platform | Runner | Output | Size |
 |----------|--------|--------|------|
 | Windows | windows-latest | .msi | ~100MB |
-| macOS | macos-latest | .dmg | ~100MB |
+| macOS (Intel) | macos-13 | .dmg | ~100MB |
+| macOS (Apple Silicon) | macos-14 | .dmg | ~100MB |
 | Linux | ubuntu-latest | .deb, .rpm | ~100MB each |
 | Universal | ubuntu-latest | .jar | ~5MB |
 
@@ -74,7 +76,8 @@ Edit the jpackage commands in `release.yml` to customize:
 Typical build times:
 - Fat JAR: ~2 minutes
 - Windows: ~5 minutes
-- macOS: ~5 minutes
+- macOS (Intel): ~5 minutes
+- macOS (Apple Silicon): ~5 minutes
 - Linux: ~6 minutes (builds both DEB and RPM)
 - Total: ~8-10 minutes (jobs run in parallel)
 

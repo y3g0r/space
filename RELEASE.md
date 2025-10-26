@@ -70,13 +70,19 @@ The workflow runs four parallel jobs:
 - Adds Start Menu shortcuts
 - Output: `Space-1.0.0.msi`
 
-#### 3. macOS Build
-- Creates DMG disk image
+#### 3. macOS Build (Intel)
+- Creates DMG disk image for Intel Macs
 - Bundles Java runtime
 - Creates .app bundle
-- Output: `Space-1.0.0.dmg`
+- Output: `Space-1.0.0-intel.dmg`
 
-#### 4. Linux Build
+#### 4. macOS Build (Apple Silicon)
+- Creates DMG disk image for M1/M2/M3 Macs
+- Bundles Java runtime
+- Creates .app bundle
+- Output: `Space-1.0.0-arm64.dmg`
+
+#### 5. Linux Build
 - Creates both DEB and RPM packages
 - Bundles Java runtime
 - Adds desktop launcher
@@ -252,7 +258,10 @@ After a successful release:
 4. Launch from Start Menu
 
 ### macOS
-1. Download `Space-X.X.X.dmg`
+1. Download the appropriate DMG for your Mac:
+   - **Intel Macs**: `Space-X.X.X-intel.dmg`
+   - **Apple Silicon (M1/M2/M3)**: `Space-X.X.X-arm64.dmg`
+   - Not sure? Go to  → About This Mac → check "Chip" or "Processor"
 2. Open the DMG file
 3. Drag Space to Applications folder
 4. Launch from Applications

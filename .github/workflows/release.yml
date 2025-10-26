@@ -69,9 +69,9 @@ jobs:
           name: space-windows
           path: installer/*.msi
 
-  build-macos:
-    name: Build macOS Application
-    runs-on: macos-latest
+  build-macos-intel:
+    name: Build macOS Application (Intel)
+    runs-on: macos-13
 
     steps:
       - name: Checkout code
@@ -107,10 +107,64 @@ jobs:
             --mac-package-name "Space" \
             $ICON_PARAM
 
-      - name: Upload macOS DMG
+      - name: Rename DMG to include architecture
+        run: |
+          cd installer
+          mv Space-1.0.0.dmg Space-1.0.0-intel.dmg
+
+      - name: Upload macOS DMG (Intel)
         uses: actions/upload-artifact@v4
         with:
-          name: space-macos
+          name: space-macos-intel
+          path: installer/*.dmg
+
+  build-macos-arm:
+    name: Build macOS Application (Apple Silicon)
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build with Maven
+        run: mvn clean package -DskipTests
+
+      - name: Create macOS DMG with jpackage
+        run: |
+          ICON_PARAM=""
+          if [ -f "src/main/resources/icons/icon.icns" ]; then
+            ICON_PARAM="--icon src/main/resources/icons/icon.icns"
+          fi
+
+          jpackage \
+            --type dmg \
+            --input target \
+            --dest installer \
+            --name "Space" \
+            --main-jar space-1.0.0.jar \
+            --main-class com.space.SpaceApp \
+            --app-version 1.0.0 \
+            --vendor "Space" \
+            --description "Modern cross-platform disk usage analyzer" \
+            --mac-package-name "Space" \
+            $ICON_PARAM
+
+      - name: Rename DMG to include architecture
+        run: |
+          cd installer
+          mv Space-1.0.0.dmg Space-1.0.0-arm64.dmg
+
+      - name: Upload macOS DMG (Apple Silicon)
+        uses: actions/upload-artifact@v4
+        with:
+          name: space-macos-arm64
           path: installer/*.dmg
 
   build-linux:
@@ -181,7 +235,7 @@ jobs:
 
   create-release:
     name: Create GitHub Release
-    needs: [build-jar, build-windows, build-macos, build-linux]
+    needs: [build-jar, build-windows, build-macos-intel, build-macos-arm, build-linux]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -201,7 +255,8 @@ jobs:
           files: |
             artifacts/space-fat-jar/*.jar
             artifacts/space-windows/*.msi
-            artifacts/space-macos/*.dmg
+            artifacts/space-macos-intel/*.dmg
+            artifacts/space-macos-arm64/*.dmg
             artifacts/space-linux/*.deb
             artifacts/space-linux/*.rpm
           draft: false
