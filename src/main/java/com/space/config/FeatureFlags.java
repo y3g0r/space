@@ -1,4 +1,4 @@
-package com.diskanalyzer.config;
+package com.space.config;
 
 /**
  * Feature flags for enabling/disabling application features.

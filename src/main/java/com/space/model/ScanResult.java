@@ -1,4 +1,4 @@
-package com.diskanalyzer.model;
+package com.space.model;
 
 import java.time.Instant;
 

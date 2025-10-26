@@ -1,0 +1,211 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-jar:
+    name: Build Fat JAR
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build with Maven
+        run: mvn clean package -DskipTests
+
+      - name: Rename JAR
+        run: mv target/space-1.0.0.jar target/space-fat.jar
+
+      - name: Upload Fat JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: space-fat-jar
+          path: target/space-fat.jar
+
+  build-windows:
+    name: Build Windows Installer
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build with Maven
+        run: mvn clean package -DskipTests
+
+      - name: Create Windows Installer with jpackage
+        shell: pwsh
+        run: |
+          $iconParam = ""
+          if (Test-Path "src/main/resources/icons/icon.ico") {
+            $iconParam = "--icon src/main/resources/icons/icon.ico"
+          }
+
+          $cmd = "jpackage --type msi --input target --dest installer --name Space --main-jar space-1.0.0.jar --main-class com.space.SpaceApp --app-version 1.0.0 --vendor 'Space' --description 'Modern cross-platform disk usage analyzer' --win-menu --win-dir-chooser --win-shortcut $iconParam"
+          Invoke-Expression $cmd
+
+      - name: Upload Windows Installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: space-windows
+          path: installer/*.msi
+
+  build-macos:
+    name: Build macOS Application
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build with Maven
+        run: mvn clean package -DskipTests
+
+      - name: Create macOS DMG with jpackage
+        run: |
+          ICON_PARAM=""
+          if [ -f "src/main/resources/icons/icon.icns" ]; then
+            ICON_PARAM="--icon src/main/resources/icons/icon.icns"
+          fi
+
+          jpackage \
+            --type dmg \
+            --input target \
+            --dest installer \
+            --name "Space" \
+            --main-jar space-1.0.0.jar \
+            --main-class com.space.SpaceApp \
+            --app-version 1.0.0 \
+            --vendor "Space" \
+            --description "Modern cross-platform disk usage analyzer" \
+            --mac-package-name "Space" \
+            $ICON_PARAM
+
+      - name: Upload macOS DMG
+        uses: actions/upload-artifact@v4
+        with:
+          name: space-macos
+          path: installer/*.dmg
+
+  build-linux:
+    name: Build Linux Packages
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build with Maven
+        run: mvn clean package -DskipTests
+
+      - name: Create Linux DEB package with jpackage
+        run: |
+          ICON_PARAM=""
+          if [ -f "src/main/resources/icons/icon.png" ]; then
+            ICON_PARAM="--icon src/main/resources/icons/icon.png"
+          fi
+
+          jpackage \
+            --type deb \
+            --input target \
+            --dest installer \
+            --name space \
+            --main-jar space-1.0.0.jar \
+            --main-class com.space.SpaceApp \
+            --app-version 1.0.0 \
+            --vendor "Space" \
+            --description "Modern cross-platform disk usage analyzer" \
+            --linux-shortcut \
+            --linux-menu-group "Utilities" \
+            $ICON_PARAM
+
+      - name: Create Linux RPM package with jpackage
+        run: |
+          ICON_PARAM=""
+          if [ -f "src/main/resources/icons/icon.png" ]; then
+            ICON_PARAM="--icon src/main/resources/icons/icon.png"
+          fi
+
+          jpackage \
+            --type rpm \
+            --input target \
+            --dest installer \
+            --name space \
+            --main-jar space-1.0.0.jar \
+            --main-class com.space.SpaceApp \
+            --app-version 1.0.0 \
+            --vendor "Space" \
+            --description "Modern cross-platform disk usage analyzer" \
+            --linux-shortcut \
+            --linux-menu-group "Utilities" \
+            $ICON_PARAM
+
+      - name: Upload Linux Packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: space-linux
+          path: installer/*
+
+  create-release:
+    name: Create GitHub Release
+    needs: [build-jar, build-windows, build-macos, build-linux]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Display structure of downloaded files
+        run: ls -R artifacts
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            artifacts/space-fat-jar/*.jar
+            artifacts/space-windows/*.msi
+            artifacts/space-macos/*.dmg
+            artifacts/space-linux/*.deb
+            artifacts/space-linux/*.rpm
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

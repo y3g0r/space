@@ -5,7 +5,7 @@
 ## Critical Issues
 
 ### 1. Path Traversal Vulnerability in Cache Deserialization
-**Location**: `src/main/java/com/diskanalyzer/service/CacheService.java:141`
+**Location**: `src/main/java/com/space/service/CacheService.java:141`
 **Severity**: Critical
 
 The `FileNodeDeserializer` directly uses paths from JSON without validation:
@@ -18,7 +18,7 @@ Path path = Paths.get(obj.get("path").getAsString());
 **Recommendation**: Validate and canonicalize all paths from deserialization. Ensure paths are within expected boundaries before use.
 
 ### 2. Unsafe File Deletion Operations
-**Location**: `src/main/java/com/diskanalyzer/service/DiskScanner.java:152-174`
+**Location**: `src/main/java/com/space/service/DiskScanner.java:152-174`
 **Severity**: Critical
 
 The `delete()` and `deleteRecursive()` methods don't validate that files are within safe boundaries:
@@ -28,10 +28,10 @@ The `delete()` and `deleteRecursive()` methods don't validate that files are wit
 **Recommendation**: Add boundary validation to ensure deletions only occur within scanned directory trees. Implement safelist/blocklist for critical system paths.
 
 ### 3. Insecure Cache File Handling
-**Location**: `src/main/java/com/diskanalyzer/service/CacheService.java:16`
+**Location**: `src/main/java/com/space/service/CacheService.java:16`
 **Severity**: High
 
-- Cache directory (`~/.diskanalyzer/cache`) is created without explicit permission settings
+- Cache directory (`~/.space/cache`) is created without explicit permission settings
 - Cache files could be readable/writable by other users depending on system umask
 - No integrity checks (e.g., checksums) to detect tampering
 
@@ -43,7 +43,7 @@ The `delete()` and `deleteRecursive()` methods don't validate that files are wit
 ## Medium Issues
 
 ### 4. No Boundary Validation for File Operations
-**Location**: `src/main/java/com/diskanalyzer/service/DiskScanner.java:179-203`
+**Location**: `src/main/java/com/space/service/DiskScanner.java:179-203`
 **Severity**: Medium
 
 The `move()` and `createDirectory()` methods don't verify operations stay within scanned directories:
@@ -52,7 +52,7 @@ The `move()` and `createDirectory()` methods don't verify operations stay within
 **Recommendation**: Implement path boundary validation for all file operations. Ensure operations only affect files within user-selected scan roots.
 
 ### 5. Weak Input Validation
-**Location**: `src/main/java/com/diskanalyzer/service/FileOperationsController.java:160-179`
+**Location**: `src/main/java/com/space/service/FileOperationsController.java:160-179`
 **Severity**: Medium
 
 While there is some filename validation, it could be strengthened:
@@ -153,7 +153,7 @@ All dependencies have been upgraded to their latest stable versions compatible w
 ### Full Dependency Tree (Updated)
 
 ```
-com.diskanalyzer:disk-analyzer:jar:1.0.0
+com.space:disk-analyzer:jar:1.0.0
 ├── org.openjfx:javafx-controls:jar:22.0.2
 ├── org.openjfx:javafx-fxml:jar:22.0.2
 ├── org.openjfx:javafx-graphics:jar:22.0.2

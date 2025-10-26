@@ -1,6 +1,6 @@
-package com.diskanalyzer.ui;
+package com.space.ui;
 
-import com.diskanalyzer.model.FileNode;
+import com.space.model.FileNode;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.scene.control.*;

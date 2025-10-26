@@ -1,13 +1,13 @@
-package com.diskanalyzer;
+package com.space;
 
-import com.diskanalyzer.config.FeatureFlags;
-import com.diskanalyzer.model.FileNode;
-import com.diskanalyzer.model.ScanResult;
-import com.diskanalyzer.service.CacheService;
-import com.diskanalyzer.service.DiskScanner;
-import com.diskanalyzer.service.FileOperationsController;
-import com.diskanalyzer.ui.FileTreeTableView;
-import com.diskanalyzer.ui.MultiLayerPieChart;
+import com.space.config.FeatureFlags;
+import com.space.model.FileNode;
+import com.space.model.ScanResult;
+import com.space.service.CacheService;
+import com.space.service.DiskScanner;
+import com.space.service.FileOperationsController;
+import com.space.ui.FileTreeTableView;
+import com.space.ui.MultiLayerPieChart;
 import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
@@ -23,9 +23,9 @@ import java.io.File;
 import java.util.Optional;
 
 /**
- * Main application class for Disk Analyzer.
+ * Main application class for Space.
  */
-public class DiskAnalyzerApp extends Application {
+public class SpaceApp extends Application {
     private DiskScanner scanner;
     private CacheService cacheService;
     private FileOperationsController fileOpsController;
@@ -52,7 +52,7 @@ public class DiskAnalyzerApp extends Application {
         Scene scene = new Scene(root, 1200, 800);
         loadStyles(scene);
 
-        primaryStage.setTitle("Disk Analyzer");
+        primaryStage.setTitle("Space");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -350,8 +350,8 @@ public class DiskAnalyzerApp extends Application {
 
     private void showAboutDialog() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("About Disk Analyzer");
-        alert.setHeaderText("Disk Analyzer v1.0");
+        alert.setTitle("About Space");
+        alert.setHeaderText("Space v1.0");
 
         StringBuilder features = new StringBuilder();
         features.append("A modern cross-platform disk usage analyzer\n\n");

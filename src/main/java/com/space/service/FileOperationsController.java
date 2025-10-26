@@ -1,6 +1,6 @@
-package com.diskanalyzer.service;
+package com.space.service;
 
-import com.diskanalyzer.model.FileNode;
+import com.space.model.FileNode;
 import javafx.scene.control.*;
 
 import java.io.File;

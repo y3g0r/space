@@ -13,10 +13,10 @@ mvn javafx:run
 mvn clean package
 
 # Run the application (macOS/Linux)
-java --module-path $PATH_TO_FX --add-modules javafx.controls,javafx.fxml -jar target/disk-analyzer-1.0.0.jar
+java --module-path $PATH_TO_FX --add-modules javafx.controls,javafx.fxml -jar target/space-1.0.0.jar
 
 # Or on Windows
-java --module-path %PATH_TO_FX% --add-modules javafx.controls,javafx.fxml -jar target/disk-analyzer-1.0.0.jar
+java --module-path %PATH_TO_FX% --add-modules javafx.controls,javafx.fxml -jar target/space-1.0.0.jar
 ```
 
 ## Basic Workflow
@@ -53,12 +53,12 @@ java --module-path %PATH_TO_FX% --add-modules javafx.controls,javafx.fxml -jar t
 ## Project Structure
 
 ```
-disk-analyser/
-├── src/main/java/com/diskanalyzer/
+space/
+├── src/main/java/com/space/
 │   ├── model/              # Data models (FileNode, ScanResult)
 │   ├── service/            # Business logic (Scanner, Cache, FileOps)
 │   ├── ui/                 # UI components (PieChart, TreeTable)
-│   └── DiskAnalyzerApp.java  # Main application
+│   └── SpaceApp.java  # Main application
 ├── src/main/resources/
 │   └── css/style.css       # Styling
 ├── pom.xml                 # Maven configuration

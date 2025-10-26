@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.diskanalyzer</groupId>
-    <artifactId>disk-analyzer</artifactId>
+    <groupId>com.space</groupId>
+    <artifactId>space</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>Disk Analyzer</name>
+    <name>Space</name>
     <description>Modern cross-platform disk usage analyzer with interactive visualization</description>
 
     <properties>
@@ -78,7 +78,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>${javafx.maven.plugin.version}</version>
                 <configuration>
-                    <mainClass>com.diskanalyzer.DiskAnalyzerApp</mainClass>
+                    <mainClass>com.space.SpaceApp</mainClass>
                 </configuration>
             </plugin>
 
@@ -96,7 +96,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.diskanalyzer.DiskAnalyzerApp</mainClass>
+                                    <mainClass>com.space.SpaceApp</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

@@ -1,7 +1,7 @@
-package com.diskanalyzer.service;
+package com.space.service;
 
-import com.diskanalyzer.model.FileNode;
-import com.diskanalyzer.model.ScanResult;
+import com.space.model.FileNode;
+import com.space.model.ScanResult;
 import javafx.concurrent.Task;
 import jnr.posix.FileStat;
 import jnr.posix.POSIX;

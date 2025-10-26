@@ -1,6 +1,6 @@
-package com.diskanalyzer.ui;
+package com.space.ui;
 
-import com.diskanalyzer.model.FileNode;
+import com.space.model.FileNode;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;

@@ -1,7 +1,7 @@
-package com.diskanalyzer.service;
+package com.space.service;
 
-import com.diskanalyzer.model.FileNode;
-import com.diskanalyzer.model.ScanResult;
+import com.space.model.FileNode;
+import com.space.model.ScanResult;
 import com.google.gson.*;
 
 import java.io.*;
@@ -13,7 +13,7 @@ import java.util.*;
  * Service for caching and loading scan results.
  */
 public class CacheService {
-    private static final String CACHE_DIR = System.getProperty("user.home") + "/.diskanalyzer/cache";
+    private static final String CACHE_DIR = System.getProperty("user.home") + "/.space/cache";
     private final Gson gson;
 
     public CacheService() {
