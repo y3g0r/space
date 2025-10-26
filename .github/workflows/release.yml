@@ -52,6 +52,13 @@ jobs:
       - name: Build with Maven
         run: mvn clean package -DskipTests
 
+      - name: Download JavaFX jmods
+        shell: pwsh
+        run: |
+          Invoke-WebRequest -Uri "https://download2.gluonhq.com/openjfx/22.0.2/openjfx-22.0.2_windows-x64_bin-jmods.zip" -OutFile "javafx-jmods.zip"
+          Expand-Archive -Path javafx-jmods.zip -DestinationPath .
+          ls javafx-jmods-22.0.2
+
       - name: Create Windows Installer with jpackage
         shell: pwsh
         run: |
@@ -60,7 +67,7 @@ jobs:
             $iconParam = "--icon src/main/resources/icons/icon.ico"
           }
 
-          $cmd = "jpackage --type msi --input target --dest installer --name Space --main-jar space-1.0.0.jar --main-class com.space.SpaceApp --app-version 1.0.0 --vendor 'Space' --description 'Modern cross-platform disk usage analyzer' --win-menu --win-dir-chooser --win-shortcut $iconParam"
+          $cmd = "jpackage --type msi --input target --dest installer --name Space --main-jar space-1.0.0.jar --main-class com.space.SpaceApp --app-version 1.0.0 --vendor 'Space' --description 'Modern cross-platform disk usage analyzer' --module-path javafx-jmods-22.0.2 --add-modules javafx.controls,javafx.fxml,javafx.graphics --win-menu --win-dir-chooser --win-shortcut $iconParam"
           Invoke-Expression $cmd
 
       - name: Upload Windows Installer
@@ -87,6 +94,12 @@ jobs:
       - name: Build with Maven
         run: mvn clean package -DskipTests
 
+      - name: Download JavaFX jmods
+        run: |
+          curl -L -o javafx-jmods.zip https://download2.gluonhq.com/openjfx/22.0.2/openjfx-22.0.2_osx-x64_bin-jmods.zip
+          unzip -q javafx-jmods.zip
+          ls -la javafx-jmods-22.0.2
+
       - name: Create macOS DMG with jpackage
         run: |
           ICON_PARAM=""
@@ -105,6 +118,8 @@ jobs:
             --vendor "Space" \
             --description "Modern cross-platform disk usage analyzer" \
             --mac-package-name "Space" \
+            --module-path javafx-jmods-22.0.2 \
+            --add-modules javafx.controls,javafx.fxml,javafx.graphics \
             $ICON_PARAM
 
       - name: Rename DMG to include architecture
@@ -136,6 +151,12 @@ jobs:
       - name: Build with Maven
         run: mvn clean package -DskipTests
 
+      - name: Download JavaFX jmods
+        run: |
+          curl -L -o javafx-jmods.zip https://download2.gluonhq.com/openjfx/22.0.2/openjfx-22.0.2_osx-aarch64_bin-jmods.zip
+          unzip -q javafx-jmods.zip
+          ls -la javafx-jmods-22.0.2
+
       - name: Create macOS DMG with jpackage
         run: |
           ICON_PARAM=""
@@ -154,6 +175,8 @@ jobs:
             --vendor "Space" \
             --description "Modern cross-platform disk usage analyzer" \
             --mac-package-name "Space" \
+            --module-path javafx-jmods-22.0.2 \
+            --add-modules javafx.controls,javafx.fxml,javafx.graphics \
             $ICON_PARAM
 
       - name: Rename DMG to include architecture
@@ -185,6 +208,12 @@ jobs:
       - name: Build with Maven
         run: mvn clean package -DskipTests
 
+      - name: Download JavaFX jmods
+        run: |
+          curl -L -o javafx-jmods.zip https://download2.gluonhq.com/openjfx/22.0.2/openjfx-22.0.2_linux-x64_bin-jmods.zip
+          unzip -q javafx-jmods.zip
+          ls -la javafx-jmods-22.0.2
+
       - name: Create Linux DEB package with jpackage
         run: |
           ICON_PARAM=""
@@ -202,6 +231,8 @@ jobs:
             --app-version 1.0.0 \
             --vendor "Space" \
             --description "Modern cross-platform disk usage analyzer" \
+            --module-path javafx-jmods-22.0.2 \
+            --add-modules javafx.controls,javafx.fxml,javafx.graphics \
             --linux-shortcut \
             --linux-menu-group "Utilities" \
             $ICON_PARAM
@@ -223,6 +254,8 @@ jobs:
             --app-version 1.0.0 \
             --vendor "Space" \
             --description "Modern cross-platform disk usage analyzer" \
+            --module-path javafx-jmods-22.0.2 \
+            --add-modules javafx.controls,javafx.fxml,javafx.graphics \
             --linux-shortcut \
             --linux-menu-group "Utilities" \
             $ICON_PARAM
